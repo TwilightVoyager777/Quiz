@@ -9,8 +9,10 @@ import SwiftUI
 
 struct MCQQuizView: View {
     // MARK: -Properties
+    
     @EnvironmentObject private var score: Score
-
+    @EnvironmentObject private var resetManager: QuizResetManager
+    
     private let questions = QuizData.mcqQuestions
     @State private var index: Int = 0
 
@@ -87,6 +89,13 @@ struct MCQQuizView: View {
                 hasSubmittedForCurrent = true
             }
         }
+        
+        .onChange(of: resetManager.resetID) { _ in
+                    index = 0
+                    selection = 0
+                    hasSubmittedForCurrent = false
+                    lastResultIsCorrect = nil
+                }
     }
 }
 
@@ -94,5 +103,6 @@ struct MCQQuizView: View {
 #Preview {
     MCQQuizView()
         .environmentObject(Score.shared)
-
+        .environmentObject(NumericQuestionStore())
+        .environmentObject(QuizResetManager())
 }

@@ -43,5 +43,7 @@ struct ScoreView: View {
 #Preview {
     ScoreView()
         .environmentObject(Score.shared)
+        .environmentObject(NumericQuestionStore())
+        .environmentObject(QuizResetManager())
 
 }

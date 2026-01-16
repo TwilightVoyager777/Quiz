@@ -8,6 +8,9 @@
 import SwiftUI
 
 struct RootTabView: View {
+    @EnvironmentObject private var score: Score
+    @EnvironmentObject private var store: NumericQuestionStore
+    @EnvironmentObject private var resetManager: QuizResetManager
     var body: some View {
         TabView {
             MCQQuizView()
@@ -17,7 +20,12 @@ struct RootTabView: View {
             
             NumericQuizView()
                 .tabItem {
-                    Label("Numberical", systemImage: "number.square")
+                    Label("Numerical", systemImage: "number.square")
+                }
+            
+            NumericQuestionEditorView()
+                .tabItem {
+                    Label("Edit", systemImage: "slider.horizontal.3")
                 }
             
             ScoreView()
@@ -31,4 +39,6 @@ struct RootTabView: View {
 #Preview {
     RootTabView()
         .environmentObject(Score.shared)
+        .environmentObject(NumericQuestionStore())
+        .environmentObject(QuizResetManager())
 }
